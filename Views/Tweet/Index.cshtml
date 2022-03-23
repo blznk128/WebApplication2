@@ -1,0 +1,38 @@
+﻿@model WebApplication2.Models.Twit
+
+<form>
+  <div class="mb-3">
+    <label for="text" class="form-label">Twit</label>
+    <input type="text" id = "theTwit" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+  </div>
+  
+  <button type="submit" class="btn btn-primary">Submit</button>
+</form>
+
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+<script>
+        let loggedInId;
+        var url = "/Home/AjaxMethod"
+        $.get(url, function (data) {
+        console.log('this is new id',data);
+        loggedInId = data
+        console.log('this is userid', loggedInId)
+        })
+    let createTwit = $("#theTwit")
+    $(".btn").click(function(){
+        event.preventDefault()
+        console.log(createTwit.val())
+        $.ajax({
+                type: "POST",
+                url: "/Tweet/AsCreateTwit",
+                data: {
+                TheTwit: createTwit.val(),
+                UserId: loggedInId
+                },
+                success: function(data) {
+                console.log(data)
+                }
+            });
+    })
+</script>

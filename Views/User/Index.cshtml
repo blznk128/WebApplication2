@@ -1,0 +1,87 @@
+﻿
+@model IEnumerable<WebApplication2.Models.UserAndTwit>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<h4>Twit</h4>
+<hr />
+@*<form method="post" asp-action="Create">
+    <div class="border p-3">
+        <div class="form-group row">
+            <h2 class="text-black-50 pl-3">Add Twit</h2>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                <div class="form-group row">
+                    <div class="col-4">
+                        <label asp-for="TheTwit "></label>
+                    </div>
+                    <div class="col-4">
+                        <label asp-for="UserId"></label>
+                    </div> 
+                </div>
+                <div class="form-group row">
+                    <div class="col-4">
+                        <input asp-for="TheTwit" class="form-control" />
+                    </div>
+                    <div class="col-4">
+                        <input asp-for="UserId" class="form-control" />
+                    </div>       
+                </div>
+                <div class="form-group row">
+                    <div class="col-8 offset-2 row">
+                        <div class="col">
+                            <input type="submit" class="btn btn-info w-75" value="create" />
+                        </div>
+                        <div class="col">
+                            <a asp-action="Index" class="btn btn-danger w-75">Back</a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</form>*@
+<table class="table table-striped">
+    <tr>
+        <td>Name</td>
+        <td>Twits</td>
+        
+       
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.primoNameVm.UserName</td>
+            <td>@item.daTwitVm.TheTwit</td>
+            
+            
+        </tr>
+    }
+</table>
+@*<table class="table table-striped">
+    <tr>
+        <td>Name</td>
+        <td>My Twits</td>
+        <td>Follower Name</td>
+        <td>Follower Twits</td>
+       
+    </tr>
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>@item.Name</td>
+            <td>@item.Invoices</td>
+            
+            
+        </tr>
+    }
+</table>*@
+@{  
+    Html.RenderPartial("_BringUsers");  
+} 
+

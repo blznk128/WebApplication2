@@ -1,0 +1,109 @@
+﻿    
+   <div class="col-md-12">  
+    <div class="panel panel-primary">  
+        <div class="panel-heading">  
+            <h3 class="panel-title">Users in database.</h3>  
+        </div>  
+         
+    </div><hr />  
+    <table id="tblStudent" class="table table-bordered table-striped table-responsive table-hover">  
+        <thead>  
+            <tr>  
+                <th align="left" class="productth">Name</th>  
+            </tr>  
+        </thead>  
+        <tbody></tbody>  
+    </table>  
+    </div> 
+    <div>
+        <table id="twits" class="table table-bordered table-striped table-responsive table-hover">  
+        <thead>  
+            <tr>  
+                <th align="left" class="productth">Name</th>  
+            </tr>  
+        </thead>  
+        <tbody></tbody>  
+    </table>  
+    </div>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+    <script type="text/javascript">
+        let loggedInId;
+        $(document).on("click", "a.testOne", saveUser);
+        function getUsers() {
+                $.ajax({
+                    type: "POST",
+                    url: "/User/pullUsers",
+                    contentType: "application/json; charset=utf-8",
+                    dataType: "json",
+                    success: function (data) {
+                        console.log(data)
+                        var items = '';  
+                    $.each(data, function (jimbo, user) {  
+                    var rows = "<a id =" + user.id + " href='#'" + " class='testOne'"+">" + user.userName + "</a>" + ",  ";  
+                    $('#tblStudent tbody').append(rows);  
+                });  
+                    },
+                    failure: function (response) {
+                        alert("this is failture " + response.responseText);
+                    },
+                    error: function (response) {
+                        alert("this is error" + response.responseText);
+                    }
+                }); 
+        };
+        var url = "/Home/AjaxMethod"
+        $.get(url, function (data) {
+        console.log('this is new id',data);
+        loggedInId = data
+        console.log('this is userid', loggedInId)
+    })
+    var theurl = "/User/test"
+        $.get(theurl, function (data) {
+        console.log('this is new data',data);
+        
+    })
+    var path = "/User/pullEnchiladas"
+        $.get(path, function (data) {
+        console.log('this is enchilada',data);
+        $.each(data, function (twits, data) {  
+                    var rows = "<td>" + data.theTwit + "</td>";  
+                    $('.insertTwit').append(rows);  
+                });  
+        
+    })
+        //function saveUser(){
+        //    const userClickedId = $(this).attr("id")
+        //    var url = "/User/GetTwits"
+        //    $.get(url, { id: userClickedId }, function (data) {
+        //    console.log(userClickedId , data);
+            
+        //    $.each(data, function (index, twits) {  
+        //            var rows = "<p id =" + twits.id  + " class='testOne'"+">" + twits.theTwit + "</p>" + ",  ";  
+                    
+        //            $('#twits').append(rows);  
+        //        });  
+
+        //});
+        //}
+        function saveUser(){
+            event.preventDefault();
+            console.log(loggedInId)
+            const userClickedId = $(this).attr("id")
+            $.ajax({
+                type: "POST",
+                url: "/User/AsCreateSemester",
+                data: {
+                TheUser: userClickedId,
+                UserToFollow: loggedInId
+                },
+                success: function(data) {
+                console.log(data)
+                }
+            });
+        }
+    
+
+    
+        
+        getUsers();
+    </script>
